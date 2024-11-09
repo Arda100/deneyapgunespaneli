@@ -1,30 +1,59 @@
-﻿const fs = require('fs');
-const path = require('path');
+﻿const fetch = require("node-fetch");
 
-exports.handler = async (event) => {
-  const { msg } = event.queryStringParameters || {};
+exports.handler = async function (event, context) {
+    // `msg` parametresini alın
+    const msg = event.queryStringParameters.msg;
+    if (!msg) {
+        return {
+            statusCode: 400,
+            body: JSON.stringify({ message: "Lütfen 'msg' parametresi sağlayın." }),
+        };
+    }
 
-  if (!msg) {
-    return {
-      statusCode: 400,
-      body: "Geçerli bir 'msg' parametresi belirtilmedi.",
-    };
-  }
+    const githubToken = process.env.GITHUB_TOKEN;  // GitHub API erişim belirteci
+    const repoOwner = "Arda100";
+    const repoName = "detaylar";
+    const filePath = "detay.txt";  // Dosyanın GitHub’daki yolu
 
-  const filePath = path.resolve(__dirname, '../../public/detay.txt');
-  const message = `${msg}\n`;
+    // Dosyayı GitHub API ile güncelleyin
+    try {
+        // Mevcut dosya içeriğini alın (güncelleme için mevcut dosya SHA’sına ihtiyaç var)
+        const fileResponse = await fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/contents/${filePath}`, {
+            headers: { Authorization: `token ${githubToken}` }
+        });
+        const fileData = await fileResponse.json();
+        const sha = fileData.sha;  // Mevcut dosya SHA’sı
 
-  try {
-    fs.appendFileSync(filePath, message, 'utf8');
-    return {
-      statusCode: 200,
-      body: 'ok',
-    };
-  } catch (error) {
-    console.error("Dosyaya yazılamadı:", error);
-    return {
-      statusCode: 500,
-      body: 'Dosyaya yazarken bir hata oluştu.',
-    };
-  }
+        // Yeni içeriği base64 formatında güncelleyin
+        const newContent = Buffer.from(msg).toString("base64");
+
+        // GitHub’da dosyayı güncelleyin
+        const response = await fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/contents/${filePath}`, {
+            method: "PUT",
+            headers: {
+                "Authorization": `token ${githubToken}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                message: "Yeni veri eklendi",
+                content: newContent,
+                sha: sha
+            })
+        });
+
+        if (response.ok) {
+            return {
+                statusCode: 200,
+                body: JSON.stringify({ message: "Dosya başarıyla güncellendi" })
+            };
+        } else {
+            throw new Error("Dosya güncelleme başarısız oldu.");
+        }
+    } catch (error) {
+        console.error("Hata:", error);
+        return {
+            statusCode: 500,
+            body: JSON.stringify({ message: "Dosya güncellenirken bir hata oluştu." })
+        };
+    }
 };

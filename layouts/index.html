@@ -35,7 +35,7 @@
     <script>
         // Detay.txt dosyasını düzenli aralıklarla alacak fonksiyon
         function fetchData() {
-            fetch("detay.txt")
+            fetch("/api/read")
                 .then(response => response.text())
                 .then(data => {
                     if (data == ""){
