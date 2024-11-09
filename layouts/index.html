@@ -35,7 +35,7 @@
     <script>
         // Detay.txt dosyasını düzenli aralıklarla alacak fonksiyon
         function fetchData() {
-            fetch("/api/read")
+            fetch("/.netlify/functions/read")
                 .then(response => response.text())
                 .then(data => {
                     if (data == ""){
