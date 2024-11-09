@@ -1,7 +1,7 @@
 [build]
-  command = "hugo"      # Hugo'nun build komutu
+  command = "hugo new site public"      # Hugo'nun build komutu
   publish = "public"    # Hugo tarafından oluşturulan çıkış dizini
   functions = "netlify/functions"  # Fonksiyon dosyalarının bulunduğu dizin
 
 [context.production.environment]
-  HUGO_VERSION = "0.137.0"  # (Opsiyonel) Hugo sürümünü belirtin
+  HUGO_VERSION = "0.137.0"
