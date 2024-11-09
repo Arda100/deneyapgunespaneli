@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arduino Veri Gösterimi</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            text-align: center;
+        }
+        .data-container {
+            border: 1px solid #ddd;
+            padding: 15px;
+            width: 80%;
+            margin: 0 auto;
+            background-color: #f9f9f9;
+        }
+        .data {
+            font-size: 1.2em;
+            color: #333;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Arduino'dan Gelen Veriler</h1>
+    <div class="data-container">
+        <p><strong>Güncel Veri:</strong></p>
+        <p class="data" id="dataDisplay">Yükleniyor...</p>
+    </div>
+
+    <script>
+        // Detay.txt dosyasını düzenli aralıklarla alacak fonksiyon
+        function fetchData() {
+            fetch("/detay.txt")
+                .then(response => response.text())
+                .then(data => {
+                    if (data == ""){
+                        document.getElementById("dataDisplay").textContent = "Veri alınamadı.";
+                    } else {
+                        document.getElementById("dataDisplay").textContent = data;
+                    }
+                })
+                .catch(error => {
+                    console.error("Veri alınamadı:", error);
+                    document.getElementById("dataDisplay").textContent = "Veri alınamadı.";
+                });
+        }
+
+        // İlk veri yüklemesi ve 10 saniyede bir güncelleme yap
+        fetchData(); // İlk yükleme
+        setInterval(fetchData, 10000); // 10 saniyede bir güncelleme
+    </script>
+
+</body>
+</html>
