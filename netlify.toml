@@ -3,5 +3,10 @@
   publish = "public"    # Hugo tarafından oluşturulan çıkış dizini
   functions = "netlify/functions"  # Fonksiyon dosyalarının bulunduğu dizin
 
+[[redirects]]
+  from = "/api/write"
+  to = "/.netlify/functions/write"
+  status = 200
+
 [context.production.environment]
   HUGO_VERSION = "0.137.0"
