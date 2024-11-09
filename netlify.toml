@@ -1,5 +1,5 @@
 [build]
-  command = "hugo"      # Hugo'nun build komutu
+  command = "cd public && hugo"      # Hugo'nun build komutu
   publish = "public"    # Hugo tarafından oluşturulan çıkış dizini
   functions = "netlify/functions"  # Fonksiyon dosyalarının bulunduğu dizin
 
