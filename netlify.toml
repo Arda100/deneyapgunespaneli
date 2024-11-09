@@ -4,4 +4,4 @@
   functions = "netlify/functions"  # Fonksiyon dosyalarının bulunduğu dizin
 
 [context.production.environment]
-  HUGO_VERSION = "0.89.4"  # (Opsiyonel) Hugo sürümünü belirtin
+  HUGO_VERSION = "0.137.0"  # (Opsiyonel) Hugo sürümünü belirtin
