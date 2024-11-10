@@ -23,7 +23,7 @@
         console.error("Hata:", error);
         return {
             statusCode: 500,
-            body: JSON.stringify({ message: "Dosya okunurken bir hata oluştu." })
+            body: JSON.stringify({ message: "Dosya okunurken bir hata oluştu." + error })
         };
     }
 };
