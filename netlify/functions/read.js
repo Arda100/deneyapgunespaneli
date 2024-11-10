@@ -1,6 +1,7 @@
 ﻿exports.handler = async function () {
 
-    const fetch = await import('node-fetch');
+    const { default: fetch } = await import('node-fetch');
+
     const githubToken = process.env.GITHUB_TOKEN;
     const repoOwner = "Arda100";
     const repoName = "detaylar";

@@ -1,6 +1,7 @@
 ﻿
 exports.handler = async function (event, context) {
-    const fetch = await import('node-fetch');
+    const { default: fetch } = await import('node-fetch');
+
     
     // `msg` parametresini alın
     const msg = event.queryStringParameters.msg;
