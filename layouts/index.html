@@ -36,12 +36,12 @@
         // Detay.txt dosyasını düzenli aralıklarla alacak fonksiyon
         function fetchData() {
             fetch("/.netlify/functions/read")
-                .then(response => response.text())
+                .then(response => response.json())
                 .then(data => {
                     if (data == ""){
                         document.getElementById("dataDisplay").textContent = "Veri alınamadı.";
                     } else {
-                        document.getElementById("dataDisplay").textContent = data;
+                        document.getElementById("dataDisplay").textContent = data.content;
                     }
                 })
                 .catch(error => {
