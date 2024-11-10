@@ -1,6 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="tr">
 <head>
+	<meta name="generator" content="Hugo 0.137.0">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Arduino Veri Gösterimi</title>
@@ -33,7 +34,7 @@
     </div>
 
     <script>
-        // Detay.txt dosyasını düzenli aralıklarla alacak fonksiyon
+        
         function fetchData() {
             fetch("/.netlify/functions/read")
                 .then(response => response.text())
@@ -41,7 +42,7 @@
                     if (data == ""){
                         document.getElementById("dataDisplay").textContent = "Veri alınamadı.";
                     } else {
-                        document.getElementById("dataDisplay").textContent = data.content;
+                        document.getElementById("dataDisplay").textContent = data;
                     }
                 })
                 .catch(error => {
@@ -50,9 +51,9 @@
                 });
         }
 
-        // İlk veri yüklemesi ve 10 saniyede bir güncelleme yap
-        fetchData(); // İlk yükleme
-        setInterval(fetchData, 10000); // 10 saniyede bir güncelleme
+        
+        fetchData(); 
+        setInterval(fetchData, 10000); 
     </script>
 
 </body>
