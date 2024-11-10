@@ -1,6 +1,7 @@
-﻿const fetch = require("node-fetch");
-
+﻿
 exports.handler = async function (event, context) {
+    const fetch = await import('node-fetch');
+    
     // `msg` parametresini alın
     const msg = event.queryStringParameters.msg;
     if (!msg) {
